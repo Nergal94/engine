@@ -1,17 +1,14 @@
 import Game from "./general/Game";
-import Textures from "./general/Textures";
-import Element from "./general/Element";
-import { texturePack } from '../textures/index';
-
-const textures = new Textures(texturePack);
+import {Camera} from "./general/Camera";
+import {GameLoop} from "./general/GameLoop";
 const game = new Game('canvas',600, 800);
 
 const startUp = async () => {
-  await textures.loadTextures();
   game.init();
-  const img = textures.getImage('test');
-  const element = new Element(img, 50, 50);
-  game.appendModel(element.model);
+  const data = game.canvasData;
+  const camera = new Camera(data);
+
+  GameLoop.init(camera.view, data);
 }
 
 startUp();

@@ -1,5 +1,16 @@
-export interface ITexture {
+export interface IAsset {
   id: string,
-  image: any,
+  asset: any,
   src: string
+}
+
+
+export interface ILoader {
+  loadAsset: any
+}
+
+export interface ICanvasData {
+  context: any,
+  width: number,
+  height: number
 }

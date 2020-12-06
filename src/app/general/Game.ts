@@ -1,3 +1,5 @@
+import {ICanvasData} from "../interfaces/index";
+
 export default class Game {
   private _ctx: any;
   public height: number;
@@ -22,7 +24,12 @@ export default class Game {
     this._ctx = canvas.getContext('2d');
   }
 
-  public appendModel(model: HTMLCanvasElement) {
-    this._ctx.drawImage(model, 0, 0);
+  get canvasData() {
+    const data: ICanvasData = {
+      context: this._ctx,
+      width: this.width,
+      height: this.height
+    }
+    return data;
   }
 }

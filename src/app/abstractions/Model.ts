@@ -1,7 +1,7 @@
 export default abstract class Model {
-  private _img: any;
-  private _height: number;
-  private _width: number;
+  readonly _img: any;
+  readonly _height: number;
+  readonly _width: number;
   private _model: HTMLCanvasElement;
 
   protected constructor(img: any, width: number, height: number) {
