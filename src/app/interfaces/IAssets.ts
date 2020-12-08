@@ -1,12 +1,11 @@
 export interface IAsset {
   id: string,
   asset: any,
+  sX?: number,
+  sY?: number,
+  sWidth?: number,
+  sHeight?: number,
   src: string
-}
-
-
-export interface ILoader {
-  loadAsset: any
 }
 
 export interface ICanvasData {

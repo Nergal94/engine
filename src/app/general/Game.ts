@@ -1,4 +1,4 @@
-import {ICanvasData} from "../interfaces/index";
+import {ICanvasData} from "../interfaces/IAssets";
 
 export default class Game {
   private _ctx: any;
