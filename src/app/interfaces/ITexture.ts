@@ -3,4 +3,5 @@ export interface ITexture {
   height: number,
   width: number,
   texture: any,
+  getTexture: (sX: number, sY: number, assetId: string) => HTMLCanvasElement
 }

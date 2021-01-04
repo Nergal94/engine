@@ -4,7 +4,7 @@ import {Constants} from "../enums/constants";
 import {ITexture} from "../interfaces/ITexture";
 import {ILevel} from "../interfaces/ILevel";
 
-export class Camera implements ICamera{
+export class Camera implements ICamera {
 
   x0: number;
   xEnd: number;
@@ -18,16 +18,10 @@ export class Camera implements ICamera{
 
   private _cameraMatrix: any[] = [];
 
-  readonly _width: number;
-  readonly _height: number;
 
   constructor(data: ICanvasData, layers: ILevel[]) {
-    this._width = data.width;
-    this._height = data.height;
     this.x0 = 0;
     this.y0 = 0;
-    this.xEnd = this.x0 + this._width;
-    this.yEnd = this.y0 + this._height;
     this._layers = layers;
   }
 
@@ -36,13 +30,14 @@ export class Camera implements ICamera{
       (_, i) => Array.from({length : Constants.cameraSize}));
     for (let y = 0; y < Constants.cameraSize; y++) {
       for (let x = 0; x < Constants.cameraSize; x++) {
-        cameraLayer[y][x] = levelLayer.levelMatrix[y][x];
+        cameraLayer[y][x] = levelLayer.levelMatrix[y + this.y0][x + this.x0];
       }
     }
     return cameraLayer;
   }
 
   private fillMatrix() {
+    this._cameraMatrix = [];
     for (const layerIndex in this._layers) {
       const layer = this._layers[layerIndex];
       this._cameraMatrix.push(this.getLayer(layer));
@@ -57,4 +52,37 @@ export class Camera implements ICamera{
   setAsRender() {
     this.isRender = true;
   }
+
+  moveUp() {
+    if (this.y0 === 0) {
+      return;
+    }
+    this.y0 -=1;
+    this.isRender = false;
+  }
+
+  moveDown() {
+    if (this.y0 === Constants.levelSize - Constants.cameraSize) {
+      return;
+    }
+    this.y0 +=1;
+    this.isRender = false;
+  }
+
+  moveLeft() {
+    if (this.x0 === 0) {
+      return;
+    }
+    this.x0 -=1;
+    this.isRender = false;
+  }
+
+  moveRight() {
+    if (this.x0 === Constants.levelSize - Constants.cameraSize) {
+      return;
+    }
+    this.x0 +=1;
+    this.isRender = false;
+  }
+
 }

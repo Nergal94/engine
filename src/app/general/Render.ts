@@ -10,11 +10,13 @@ export class Render {
         if (tile.id === 'empty') {
           continue;
         }
+
         const cartX: number = Number(j) * tile.width / 2;
-        const cartY: number = Number(i) * tile.height / 2;
+        const cartY: number = Number(i) * tile.height;
 
         const isoX: number = cartX - cartY + canvasData.width / 2 - tile.width / 2;
         const isoY: number = (cartX + cartY) / 2 + canvasData.height / 8;
+
 
         canvasData.context.drawImage(tile.texture, isoX, isoY, tile.width, tile.height);
       }

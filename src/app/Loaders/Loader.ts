@@ -1,7 +1,7 @@
 import {IAsset} from "../interfaces/IAssets";
 
-export default class Loader {
-  static async loadAsset(asset: IAsset) {
+export class Loader {
+  static async load(asset: IAsset) {
     asset.asset.src = asset.src;
     return new Promise<void> (resolve => {
       if (!asset.src) {

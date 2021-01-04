@@ -7,5 +7,9 @@ export interface ICamera {
   yEnd: number,
   isRender: boolean,
   getCamera: ITexture[][],
+  moveUp: any,
+  moveDown: any,
+  moveLeft: any,
+  moveRight: any,
   setAsRender: () => void
 } 

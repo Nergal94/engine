@@ -1,5 +1,6 @@
 export const enum Constants {
   cameraSize = 16,
   levelSize = 32,
-  tileSize = 64
+  tileWidth = 64,
+  tileHeight = 32
 }
