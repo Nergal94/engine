@@ -1,4 +1,4 @@
-import {ITexture} from "./ITexture";
+import {ITile} from "./ITile";
 
 export interface ICamera {
   x0: number,
@@ -6,7 +6,7 @@ export interface ICamera {
   xEnd: number,
   yEnd: number,
   isRender: boolean,
-  getCamera: ITexture[][],
+  getCamera: ITile[][][],
   moveUp: any,
   moveDown: any,
   moveLeft: any,

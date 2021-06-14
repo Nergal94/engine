@@ -2,36 +2,39 @@ import Game from "./general/Game";
 import {Camera} from "./general/Camera";
 import {GameLoop} from "./general/GameLoop";
 import {ImageLoader} from "./Loaders/ImageLoader";
-import {imagesPack} from "./enums/images";
-import {ILevel} from "./interfaces/ILevel";
-import {MouseController} from "./Controllers/MouseController";
-import {Level} from "./general/Level";
-import {LevelLoader} from "./Loaders/LevelLoader";
-// import {mainLevel} from "./enums/MainLevel";
+import {ILayer} from "./interfaces/ILayer";
+import {KeyboardController} from "./Controllers/KeyboardController";
+import {Layer} from "./general/Layer";
+import {Assets} from "./general/Assets";
 const game = new Game('canvas',768, 1024);
 
-const mainLevel = require('../assets/dnd.xml');
+const layersData = require('../assets/dnd.json');
 
 const startUp = async () => {
   game.init();
   const data = game.canvasData;
-  // await ImageLoader.loadAll(imagesPack);
-  // const levelFile:any = await LevelLoader.loadLevel(mainLevel);
 
-  const MainLevel = new Level();
-  MainLevel.createLevel(mainLevel);
+  const assets = new Assets(layersData.tilesets);
 
-  const layers: ILevel[] = [];
+  await assets.loadAssets();
+
+  const layers: ILayer[] = [];
+
+  for (const layerData of layersData.layers) {
+    const layer = new Layer(layerData);
+    layer.fillLayerMatrix(assets);
+    layers.push(layer);
+  }
 
 
   const camera = new Camera(data, layers);
   GameLoop.init(camera, data);
 
-  const controller = new MouseController();
+  const controller = new KeyboardController();
 
   const canvas = document.getElementById('canvas');
 
-  canvas.addEventListener('mousemove', e => controller.setControllerPosition(e, data, camera))
+  window.addEventListener('keydown', e => controller.setControllerPosition(e, data, camera))
 
 }
 

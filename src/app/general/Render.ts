@@ -1,24 +1,28 @@
 import {ICanvasData} from "../interfaces/IAssets";
 import {ICamera} from "../interfaces/ICamera";
+import {ITile} from "../interfaces/ITile";
+import {Constants} from "../enums/constants";
 
 export class Render {
 
-  static renderLayer(layer: any[], canvasData: ICanvasData) {
+  static renderLayer(layer: ITile[][], canvasData: ICanvasData) {
     for (let i in layer) {
       for (let j in layer[i]) {
         const tile = layer[i][j];
-        if (tile.id === 'empty') {
+        if (!tile.tile) {
           continue;
         }
 
-        const cartX: number = Number(j) * tile.width / 2;
-        const cartY: number = Number(i) * tile.height;
+        const cartX: number = Number(j) * Constants.tileWidth / 2;
+        const cartY: number = Number(i) * Constants.tileHeight;
 
-        const isoX: number = cartX - cartY + canvasData.width / 2 - tile.width / 2;
+        const isoX: number = cartX - cartY + canvasData.width / 2 - Constants.tileWidth / 2;
         const isoY: number = (cartX + cartY) / 2 + canvasData.height / 8;
 
+        // const isoX: number = ((Constants.tileWidth * Number(j)) / 2) + ((Constants.levelSize * Constants.tileWidth) / 2) - ((Number(i) * Constants.tileWidth) / 2);
+        // const isoY: number = (((Constants.levelSize - Number(i) - 1) * Constants.tileHeight) / 2) + ((Constants.levelSize * Constants.tileHeight) / 2) - ((Number(j) * Constants.tileHeight) / 2);
 
-        canvasData.context.drawImage(tile.texture, isoX, isoY, tile.width, tile.height);
+        canvasData.context.drawImage(tile.tile, isoX, isoY, Constants.tileWidth, Constants.tileHeight);
       }
     }
   }

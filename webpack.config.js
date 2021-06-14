@@ -1,4 +1,5 @@
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 	entry: './src/app/index.ts',
@@ -28,4 +29,14 @@ module.exports = {
 		filename: 'main.js',
 		path: path.resolve(__dirname, 'dist'),
 	},
+	plugins: [
+		new CopyPlugin({
+			patterns: [
+				{ from: "public", to: "public" },
+			],
+			options: {
+				concurrency: 100,
+			},
+		}),
+	],
 };

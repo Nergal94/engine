@@ -1,8 +1,7 @@
 import {ICanvasData} from "../interfaces/IAssets";
 import {ICamera} from "../interfaces/ICamera";
 import {Constants} from "../enums/constants";
-import {ITexture} from "../interfaces/ITexture";
-import {ILevel} from "../interfaces/ILevel";
+import {ILayer} from "../interfaces/ILayer";
 
 export class Camera implements ICamera {
 
@@ -14,23 +13,23 @@ export class Camera implements ICamera {
 
   isRender: boolean =  false;
 
-  readonly _layers: ILevel[];
+  readonly _layers: ILayer[];
 
   private _cameraMatrix: any[] = [];
 
 
-  constructor(data: ICanvasData, layers: ILevel[]) {
+  constructor(data: ICanvasData, layers: ILayer[]) {
     this.x0 = 0;
     this.y0 = 0;
     this._layers = layers;
   }
 
-  private getLayer(levelLayer: ILevel) {
+  private getLayer(levelLayer: ILayer) {
     const cameraLayer = Array.from({length: Constants.cameraSize},
       (_, i) => Array.from({length : Constants.cameraSize}));
     for (let y = 0; y < Constants.cameraSize; y++) {
       for (let x = 0; x < Constants.cameraSize; x++) {
-        cameraLayer[y][x] = levelLayer.levelMatrix[y + this.y0][x + this.x0];
+        cameraLayer[y][x] = levelLayer.layerMatrix[y + this.y0][x + this.x0];
       }
     }
     return cameraLayer;
