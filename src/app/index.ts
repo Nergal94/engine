@@ -21,6 +21,9 @@ const startUp = async () => {
   const layers: ILayer[] = [];
 
   for (const layerData of layersData.layers) {
+    // if (layerData.name != 'decor') {
+    //   continue;
+    // }
     const layer = new Layer(layerData);
     layer.fillLayerMatrix(assets);
     layers.push(layer);

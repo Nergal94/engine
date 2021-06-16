@@ -1,1 +1,1 @@
-npm i -> npm run start
+npm i -> nmp run build -> npm run start

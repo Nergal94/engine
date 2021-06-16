@@ -45,10 +45,10 @@ export class Layer implements ILayer {
 
 
     if (sprite.firstTile != 1) {
-      tileId = tileId - sprite.firstTile;
+      tileId = tileId - sprite.firstTile + 1;
     }
 
-    !tileId && (tileId = 1);
+    // !tileId && (tileId = 1);
 
     const {asset} = sprite;
 
@@ -62,12 +62,15 @@ export class Layer implements ILayer {
     if (tileId > maxInRow) {
       for (let i = 0; i < maxRow; i++) {
         if (tileId > i * maxInRow && tileId <= (i * maxInRow + maxInRow)) {
+          // console.log(tileId, i * maxInRow, (i * maxInRow + maxInRow));
           currentTileIdRow = i;
         }
       }
 
-      sX = (tileId - maxInRow * currentTileIdRow) - 1;
+      sX = (tileId - maxInRow * currentTileIdRow - 1) * Constants.tileWidth;
       sY = Constants.tileHeight * currentTileIdRow;
+
+      // console.log(tileId, maxInRow, currentTileIdRow, sX)
     }
 
     ctx.drawImage(asset, sX, sY, sWidth, sHeight, 0, 0, width, height);
