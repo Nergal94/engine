@@ -2,6 +2,8 @@ import {ICanvasData} from "../interfaces/IAssets";
 import {ICamera} from "../interfaces/ICamera";
 import {ITile} from "../interfaces/ITile";
 import {Constants} from "../enums/constants";
+import {Camera} from "./Camera";
+import {ILayer} from "../interfaces/ILayer";
 
 export class Render {
 
@@ -27,8 +29,8 @@ export class Render {
     }
   }
 
-  static render(camera: ICamera, canvasData: ICanvasData) {
-    if (camera.isRender) {
+  static render(fullLayers : ILayer[],canvasData: ICanvasData) {
+    if (Camera.isRender) {
       return;
     }
 
@@ -36,12 +38,12 @@ export class Render {
     canvasData.context.fillStyle = '#000';
     canvasData.context.fillRect(0,0, canvasData.width, canvasData.height);
 
-    const layers = camera.getCamera;
+    const layers = Camera.getCamera(fullLayers);
 
     for (const layer of layers) {
       this.renderLayer(layer, canvasData);
     }
 
-    camera.setAsRender();
+    Camera.setAsRender();
   }
 }

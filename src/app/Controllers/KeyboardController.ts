@@ -1,25 +1,25 @@
 import {IUserController} from "../interfaces/IUserController";
 import {ICanvasData} from "../interfaces/IAssets";
-import {ICamera} from "../interfaces/ICamera";
+import {Camera} from "../general/Camera";
 
 export class KeyboardController implements IUserController{
 
-  setControllerPosition(e: KeyboardEvent, canvas: ICanvasData, camera: ICamera) {
+  setControllerPosition(e: KeyboardEvent, canvas: ICanvasData) {
     switch (e.key) {
       case 'ArrowDown': {
-        camera.moveDown();
+        Camera.moveDown();
         break;
       }
       case 'ArrowUp': {
-        camera.moveUp();
+        Camera.moveUp();
         break;
       }
       case 'ArrowLeft': {
-        camera.moveLeft();
+        Camera.moveLeft();
         break;
       }
       case 'ArrowRight': {
-        camera.moveRight();
+        Camera.moveRight();
         break;
       }
     }

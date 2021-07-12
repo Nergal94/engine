@@ -1,13 +1,13 @@
 import {Render} from "./Render";
 import {ICanvasData} from "../interfaces/IAssets";
-import {ICamera} from "../interfaces/ICamera";
+import {ILayer} from "../interfaces/ILayer";
 
 export class GameLoop {
 
-  static init(camera: ICamera, canvasData: ICanvasData) {
+  static init(layers: ILayer[], canvasData: ICanvasData) {
     requestAnimationFrame(() => {
-      Render.render(camera, canvasData);
-      requestAnimationFrame(() => this.init(camera, canvasData));
+      Render.render(layers, canvasData);
+      requestAnimationFrame(() => this.init(layers, canvasData));
     });
   }
 }

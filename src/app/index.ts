@@ -6,6 +6,8 @@ import {ILayer} from "./interfaces/ILayer";
 import {KeyboardController} from "./Controllers/KeyboardController";
 import {Layer} from "./general/Layer";
 import {Assets} from "./general/Assets";
+import {Hero} from "./Characters/Hero";
+import {heroData} from "./enums/HeroData";
 const game = new Game('canvas',768, 1024);
 
 const layersData = require('../assets/dnd.json');
@@ -21,23 +23,35 @@ const startUp = async () => {
   const layers: ILayer[] = [];
 
   for (const layerData of layersData.layers) {
-    // if (layerData.name != 'decor') {
-    //   continue;
-    // }
+    if (!layerData.visible) {
+      continue;
+    }
     const layer = new Layer(layerData);
     layer.fillLayerMatrix(assets);
     layers.push(layer);
   }
 
+  const hero = new Hero('skeleton_0', 11, 3, heroData, assets);
 
-  const camera = new Camera(data, layers);
-  GameLoop.init(camera, data);
+  layers.push(hero.layer);
+
+  setInterval(() => {
+    hero.move();
+    layers.splice(layers.findIndex(l => l.layerData.name === hero.assetId), 1);
+    layers.push(hero.layer);
+  }, 1000);
+
+
+
+
+  // const camera = new Camera(data, layers);
+  GameLoop.init(layers, data);
 
   const controller = new KeyboardController();
 
   const canvas = document.getElementById('canvas');
 
-  window.addEventListener('keydown', e => controller.setControllerPosition(e, data, camera))
+  window.addEventListener('keydown', e => controller.setControllerPosition(e, data))
 
 }
 

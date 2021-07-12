@@ -11,5 +11,6 @@ export interface ICamera {
   moveDown: any,
   moveLeft: any,
   moveRight: any,
-  setAsRender: () => void
+  setAsRender: () => void,
+  setAsNeedRender: () => void
 } 

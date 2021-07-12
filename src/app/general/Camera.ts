@@ -3,28 +3,28 @@ import {ICamera} from "../interfaces/ICamera";
 import {Constants} from "../enums/constants";
 import {ILayer} from "../interfaces/ILayer";
 
-export class Camera implements ICamera {
+export class Camera {
 
-  x0: number;
-  xEnd: number;
+  static x0: number = 0;
+  static xEnd: number;
 
-  y0: number;
-  yEnd: number;
+  static y0: number = 0;
+  static yEnd: number;
 
-  isRender: boolean =  false;
+  static isRender: boolean =  false;
 
-  readonly _layers: ILayer[];
+  private static _layers: ILayer[];
 
-  private _cameraMatrix: any[] = [];
+  private static _cameraMatrix: any[] = [];
 
 
-  constructor(data: ICanvasData, layers: ILayer[]) {
-    this.x0 = 0;
-    this.y0 = 0;
-    this._layers = layers;
-  }
+  // constructor(data: ICanvasData, layers: ILayer[]) {
+  //   this.x0 = 0;
+  //   this.y0 = 0;
+  //   this._layers = layers;
+  // }
 
-  private getLayer(levelLayer: ILayer) {
+  private static getLayer(levelLayer: ILayer) {
     const cameraLayer = Array.from({length: Constants.cameraSize},
       (_, i) => Array.from({length : Constants.cameraSize}));
     for (let y = 0; y < Constants.cameraSize; y++) {
@@ -35,7 +35,7 @@ export class Camera implements ICamera {
     return cameraLayer;
   }
 
-  private fillMatrix() {
+  private static fillMatrix() {
     this._cameraMatrix = [];
     for (const layerIndex in this._layers) {
       const layer = this._layers[layerIndex];
@@ -43,45 +43,50 @@ export class Camera implements ICamera {
     }
   }
 
-  get getCamera() {
+  static getCamera(layers: ILayer[]) {
+    this._layers = layers;
     this.fillMatrix();
     return this._cameraMatrix;
   }
 
-  setAsRender() {
+  static setAsNeedRender() {
+    this.isRender = false;
+  }
+
+  static setAsRender() {
     this.isRender = true;
   }
 
-  moveUp() {
+  static moveUp() {
     if (this.y0 === 0) {
       return;
     }
     this.y0 -=1;
-    this.isRender = false;
+    this.setAsNeedRender();
   }
 
-  moveDown() {
+  static moveDown() {
     if (this.y0 === Constants.levelSize - Constants.cameraSize) {
       return;
     }
     this.y0 +=1;
-    this.isRender = false;
+    this.setAsNeedRender();
   }
 
-  moveLeft() {
+  static moveLeft() {
     if (this.x0 === 0) {
       return;
     }
     this.x0 -=1;
-    this.isRender = false;
+    this.setAsNeedRender();
   }
 
-  moveRight() {
+  static moveRight() {
     if (this.x0 === Constants.levelSize - Constants.cameraSize) {
       return;
     }
     this.x0 +=1;
-    this.isRender = false;
+    this.setAsNeedRender();
   }
 
 }
